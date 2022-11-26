@@ -7,6 +7,9 @@
 <title>Components Test</title>
 </head>
 <body>
-	<h2>This is a component test</h2>
+<h2>Componenting test</h2>
+<p>Start component container</p>
+<%= request.getAttribute("component") %>
+<p>Stop component container</p>
 </body>
 </html>

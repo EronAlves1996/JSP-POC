@@ -15,6 +15,7 @@ public class ComponentServlet extends HttpServlet {
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println(request.getAttribute("callComponent"));
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/templates/components.jsp");
 		requestDispatcher.forward(request, response);
 	}
