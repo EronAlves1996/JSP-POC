@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebFilter(filterName="componentDefiner", urlPatterns= {"/*"})
 public class ServletFilter extends HttpFilter { 	
-
 	@Override
-	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException{
 		String[] splitted = request.getRequestURI().split("/");
-		request.setAttribute("callComponent", splitted[splitted.length-1]);
+		request.setAttribute("component", splitted[splitted.length-1]);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/component");
 		requestDispatcher.forward(request, response);
 	}
