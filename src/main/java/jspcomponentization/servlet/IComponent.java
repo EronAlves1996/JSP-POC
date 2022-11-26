@@ -1,8 +1,11 @@
 package jspcomponentization.servlet;
 
+@FunctionalInterface
 public interface IComponent {
 	
 	public String render();
-	public String render(String... children);
+	public default String render(String... children) {
+		return render();
+	};
 	
 }
