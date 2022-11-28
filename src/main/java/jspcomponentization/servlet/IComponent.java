@@ -4,7 +4,7 @@ package jspcomponentization.servlet;
 public interface IComponent {
 	
 	public String render();
-	public default String render(String... children) {
+	public default String render(IComponent... children) {
 		return render();
 	};
 	

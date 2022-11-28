@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @WebServlet("/component")
 public class ComponentServlet extends HttpServlet {
 	
@@ -32,14 +33,14 @@ public class ComponentServlet extends HttpServlet {
 				return "<h3> Test component </h3>";
 			}
 			@Override
-			public String render(String... components) {
+			public String render(IComponent... children) {
 				StringBuilder formatted = new StringBuilder().append("<div> <h3>Formatted </h3>");
-				Arrays.stream(components).forEach(c -> formatted.append(c));
+				Arrays.stream(children).forEach(c -> formatted.append(c.render()));
 				formatted.append("</div>");
 				return formatted.toString();
 			}
 		});
-		addComponent("oneTest", ()->components.get("test").render("<p>With new element</p>"));
+		addComponent("oneTest", ()->components.get("test").render(()->"<p>With new element</p>"));
 	}
 	
 	@Override
