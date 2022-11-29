@@ -16,10 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletFilter extends HttpFilter { 	
 	@Override
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException{
-		List<String> routes = Arrays.asList(request.getRequestURI().split("/"));
-		routes.remove(0);
-		routes.remove(0);
-		request.setAttribute("route", routes);
+		List<String> routes = Arrays.asList(request.getRequestURI().split("/"));		
+		request.setAttribute("route", routes.subList(3, routes.size()));
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/component");
 		requestDispatcher.forward(request, response);
 	}

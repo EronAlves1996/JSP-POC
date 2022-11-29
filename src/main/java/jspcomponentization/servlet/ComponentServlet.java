@@ -3,6 +3,7 @@ package jspcomponentization.servlet;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -13,41 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jspcomponentization.servlet.utils.IComponent;
+import jspcomponentization.servlet.utils.RouterTree;
 
 
 @WebServlet("/component")
 public class ComponentServlet extends HttpServlet {
 	
-	private Map<String, IComponent> components = new HashMap<>();
-	
-	private void addComponent(String name, IComponent component) {
-		components.put(name, component);
-	}
+	private RouterTree routerTree = new RouterTree(()->"<h2>Main Component</h2>");
 	
 	@Override
 	public void init() {
-		addComponent("shifting", ()->"<p>This is the shifting component</p>" + "<h3>What is this shifting</h3>"
-		+ "<p>Shifting component is just a generic component</p>");
-		addComponent("ouroboros", ()->"<p>Ouruboros component</p>" + "<h3 style=\"color:green;\">Ouroboros component is awesome</h3>");
-		addComponent("test", new IComponent() {
-			@Override
-			public String render() {
-				return "<h3> Test component </h3>";
-			}
-			@Override
-			public String render(IComponent... children) {
-				StringBuilder formatted = new StringBuilder().append("<div> <h3>Formatted </h3>");
-				Arrays.stream(children).forEach(c -> formatted.append(c.render()));
-				formatted.append("</div>");
-				return formatted.toString();
-			}
-		});
-		addComponent("oneTest", ()->components.get("test").render(()->"<p>With new element</p>"));
+	    routerTree.addRoute("shifting", ()->"<h2>Shifting</h2>");
+	    routerTree.addRoute("shifting/nested", ()->"<h2>Shifting and nested</h2>");
+	    routerTree.addRoute("nested/any", ()->"Nested and any");
 	}
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("component", components.get(request.getAttribute("component")).render());
+	    List<String> routes = (List<String>) request.getAttribute("route");
+		request.setAttribute("component", routerTree.getComponentOnRoute(routes).render());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/templates/components.jsp");
 		requestDispatcher.forward(request, response);
 	}
