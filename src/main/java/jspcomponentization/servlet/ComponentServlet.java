@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jspcomponentization.servlet.utils.IComponent;
+
 
 @WebServlet("/component")
 public class ComponentServlet extends HttpServlet {

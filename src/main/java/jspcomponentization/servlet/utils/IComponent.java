@@ -1,4 +1,4 @@
-package jspcomponentization.servlet;
+package jspcomponentization.servlet.utils;
 
 @FunctionalInterface
 public interface IComponent {
